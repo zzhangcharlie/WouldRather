@@ -45,27 +45,12 @@ class UnansweredQuestion extends Component {
               className='avatar'
             />
             <div>{formatDate(timestamp)}</div>
-            {/* {parent && (
-              <button className='replying-to' onClick={(e) => this.toParent(e, parent.id)}>
-                Replying to @{parent.author}
-              </button>
-            )} */}
             {optionOne && (
                 <p className='active' id='optionOne' onClick={this.handleChooseOption}>1. {optionOne.text}</p>
             )}
             {optionTwo && (
                 <p className='active' id='optionTwo' onClick={this.handleChooseOption}>2. {optionTwo.text}</p>
             )}
-          </div>
-          <div className='tweet-icons'>
-            {/* <TiArrowBackOutline className='tweet-icon' /> */}
-            {/* <span>{replies !== 0 && replies}</span>
-            <button className='heart-button' onClick={this.handleLike}>
-              {hasLiked === true
-                ? <TiHeartFullOutline color='#e0245e' className='tweet-icon' />
-                : <TiHeartOutline className='tweet-icon'/>}
-            </button>
-            <span>{likes !== 0 && likes}</span> */}
           </div>
         </div>
       </Link>

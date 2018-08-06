@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddQuestion } from '../actions/questions'
 import { Redirect } from 'react-router-dom'
+import User from './User'
 
 class NewQuestion extends Component {
   state = {
@@ -45,7 +46,7 @@ class NewQuestion extends Component {
 
     return (
       <div>
-        <h5>Hello, {this.props.user.name}</h5>
+        <User />
         <h3 className='center'>Would You Rather</h3>
         <form className='new-tweet' onSubmit={this.handleSubmit}>
           <textarea
@@ -76,10 +77,4 @@ class NewQuestion extends Component {
   }
 }
 
-function mapStateToProps ({ authedUser, users }) {
-  return {
-    user: users[authedUser]
-  }
-}
-
-export default connect(mapStateToProps)(NewQuestion)
+export default connect()(NewQuestion)

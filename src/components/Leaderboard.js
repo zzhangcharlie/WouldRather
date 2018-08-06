@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import User from './User'
 
 class Leaderboard extends Component {
   render() {
     const users = this.props.users
     return (
       <div>
-        <h5>Hello, {this.props.user.name}</h5>
+        <User />
         <h3 className='center'>Leaderboard</h3>
         <ul className='dashboard-list'>
           {this.props.userIds.map((id) => (
