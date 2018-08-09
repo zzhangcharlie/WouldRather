@@ -1,26 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { formatDate } from '../utils/helpers'
-// import TiArrowBackOutline from 'react-icons/lib/ti/arrow-back-outline'
-// import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-// import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
+import { handleInitialData } from '../actions/shared'
 import { handleSaveQuestionAnswer } from '../actions/questions'
 import { Link, withRouter } from 'react-router-dom'
 
 class UnansweredQuestion extends Component {
   handleChooseOption = (e) => {
     const { dispatch, question, authedUser } = this.props
-    dispatch(handleSaveQuestionAnswer({
-      qid: question.id,
+    const saveQuestionAnswer = {
+      answer: e.target.id,
       authedUser,
-      answer: e.target.id
-    }))
+      qid: question.id,
+    }
+    dispatch(handleSaveQuestionAnswer({saveQuestionAnswer}))
+    dispatch(handleInitialData(authedUser))
   }
 
   render() {
     const { question, user, authorName } = this.props
 
-    if (question === null) {
+    if (!question) {
       return <p>This Question doesn't existd</p>
     }
 
@@ -67,8 +67,6 @@ function mapStateToProps ({users, questions, authedUser}, { id }) {
     user,
     authorName,
     authedUser
-      // ? formatTweet(tweet, users[tweet.author], authedUser, parentTweet)
-      // : null
   }
 }
 

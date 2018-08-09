@@ -4,11 +4,15 @@ import { receiveQuestions } from '../actions/questions'
 import { setAuthedUser } from '../actions/authedUser'
 import { showLoading, hideLoading } from 'react-redux-loading'
 
-const AUTHED_ID = null
+//const AUTHED_ID = null
 
-export function handleInitialData () {
+export function handleInitialData (AUTHED_ID) {
+  if(AUTHED_ID === undefined) AUTHED_ID = null
   return (dispatch) => {
-    dispatch(showLoading())
+    if(AUTHED_ID === null){
+      dispatch(showLoading())
+    }
+    
     return getInitialData()
       .then(({ users, questions }) => {
         dispatch(receiveUsers(users))

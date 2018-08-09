@@ -3,49 +3,47 @@ import { connect } from 'react-redux'
 import { formatDate } from '../utils/helpers'
 import { Link, withRouter } from 'react-router-dom'
 
-class AnsweredQuestion extends Component {
-  render() {
-    const { question, user, authorName, percentageOfOptionOne, percentageOfOptionTwo,
-      hasVotedOne } = this.props
+const AnsweredQuestion = ({
+  question,
+  user,
+  authorName,
+  percentageOfOptionOne,
+  percentageOfOptionTwo,
+  hasVotedOne }) => {
 
-    if (question === null || question === undefined) {
-      return <p>This Question doesn't existd</p>
-    }
-
-    const {
-      timestamp, id, optionOne, optionTwo
-    } = question
-
-    const {
-      avatarURL
-    } = user
-
-    return (
-      <Link to={`/questions/${id}`} className='tweet'>
-        <div className='tweet-info'>
-          <div>
-            <span>{authorName}</span>
-            <div>{formatDate(timestamp)}</div>
-            {optionOne && (
-                <div>
-                  <p className='active'>1. {optionOne.text}. {hasVotedOne && 'Voted'}</p>
-                  <span>Number of votes: {optionOne.votes.length}     </span>
-                  <span>Percentage: {percentageOfOptionOne}</span>
-                </div>
-                
-            )}
-            {optionTwo && (
-                <div>
-                  <p className='active'>2. {optionTwo.text}. {!hasVotedOne && 'Voted'}</p>
-                  <span>Number of votes: {optionTwo.votes.length}     </span>
-                  <span>Percentage: {percentageOfOptionTwo}</span>
-                </div>
-            )}
-          </div>
-        </div>
-      </Link>
-    )
+  if (!question) {
+    return <p>This Question doesn't existd</p>
   }
+
+  const { timestamp, id, optionOne, optionTwo } = question
+
+  const { avatarURL } = user
+
+  return (
+    <Link to={`/questions/${id}`} className='tweet'>
+      <div className='tweet-info'>
+        <div>
+          <span>{authorName}</span>
+          <div>{formatDate(timestamp)}</div>
+          {optionOne && (
+              <div>
+                <p className={hasVotedOne? 'highlight': ''}>1. {optionOne.text}.</p>
+                <span>Number of votes: {optionOne.votes.length}     </span>
+                <span>Percentage: {percentageOfOptionOne}</span>
+              </div>
+              
+          )}
+          {optionTwo && (
+              <div>
+                <p className={!hasVotedOne? 'highlight': ''}>2. {optionTwo.text}.</p>
+                <span>Number of votes: {optionTwo.votes.length}     </span>
+                <span>Percentage: {percentageOfOptionTwo}</span>
+              </div>
+          )}
+        </div>
+      </div>
+    </Link>
+  )
 }
 
 function mapStateToProps ({users, questions, authedUser}, { id }) {

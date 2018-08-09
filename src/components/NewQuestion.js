@@ -3,37 +3,34 @@ import { connect } from 'react-redux'
 import { handleAddQuestion } from '../actions/questions'
 import { Redirect } from 'react-router-dom'
 import User from './User'
+import { handleInitialData } from '../actions/shared'
+
+const defaultState = {
+  optionOneText: '',
+  optionTwoText: '',
+  toHome: false,
+}
 
 class NewQuestion extends Component {
-  state = {
-    optionOneText: '',
-    optionTwoText: '',
-    toHome: false,
-  }
+  state = defaultState;
+
   handleChange = (e) => {
-    const temp = e.target.value
-    if(e.target.id === 'optionOne'){
-        this.setState(() => ({
-            optionOneText: temp
-        }))
-    }
-    else{
-        this.setState(() => ({
-            optionTwoText: temp
-        }))
-    }
+    const { value, id } = e.target;
+    this.setState({
+      [`${id}Text`]: value
+    })
   }
   handleSubmit = (e) => {
     e.preventDefault()
 
     const { optionOneText, optionTwoText } = this.state
-    const { dispatch } = this.props
+    const { dispatch, authedUser } = this.props
 
     dispatch(handleAddQuestion(optionOneText, optionTwoText))
+    dispatch(handleInitialData(authedUser))
 
     this.setState(() => ({
-        optionOneText:'',
-        optionTwoText: '',
+        ...defaultState,
         toHome: true,
     }))
   }
@@ -77,4 +74,10 @@ class NewQuestion extends Component {
   }
 }
 
-export default connect()(NewQuestion)
+function mapStateToProps ({ authedUser }) {
+  return {
+    authedUser
+  }
+}
+
+export default connect(mapStateToProps)(NewQuestion)

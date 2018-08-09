@@ -8,7 +8,7 @@ class Login extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault()
-        var ele = document.getElementById("userId");
+        const ele = document.getElementById("userId");
         const userId = ele.options[ele.selectedIndex].value;
 
         const { dispatch } = this.props
